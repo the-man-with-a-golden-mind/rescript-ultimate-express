@@ -1,6 +1,6 @@
-open Express
+open UltimateExpress
 
-let app = expressCjs()
+let app = ultimateExpress()
 
 let router = Router.make()
 

@@ -1,9 +1,6 @@
 type express
 
-// "default" &  seem to conflict a bit right now
-// https://github.com/rescript-lang/rescript-compiler/issues/5004
-@module external expressCjs: unit => express = "express"
-@module("express") external express: unit => express = "default"
+@module external ultimateExpress: unit => express = "default"
 
 type req
 type res
@@ -15,18 +12,18 @@ type handler = (req, res) => unit
 external asMiddleware: express => middleware = "%identity"
 
 // The *Middleware suffixes aren't really nice but avoids forcing people to disable warning 44
-@module("express") external jsonMiddleware: unit => middleware = "json"
-@module("express") external jsonMiddlewareWithOptions: {..} => middleware = "json"
-@module("express") external rawMiddleware: unit => middleware = "raw"
-@module("express") external rawMiddlewareWithOptions: {..} => middleware = "raw"
-@module("express") external textMiddleware: unit => middleware = "text"
-@module("express") external textMiddlewareWithOptions: {..} => middleware = "text"
-@module("express")
+@module("ultimate-express") external jsonMiddleware: unit => middleware = "json"
+@module("ultimate-express") external jsonMiddlewareWithOptions: {..} => middleware = "json"
+@module("ultimate-express") external rawMiddleware: unit => middleware = "raw"
+@module("ultimate-express") external rawMiddlewareWithOptions: {..} => middleware = "raw"
+@module("ultimate-express") external textMiddleware: unit => middleware = "text"
+@module("ultimate-express") external textMiddlewareWithOptions: {..} => middleware = "text"
+@module("ultimate-express")
 external urlencodedMiddleware: unit => middleware = "urlencoded"
-@module("express")
+@module("ultimate-express")
 external urlencodedMiddlewareWithOptions: {..} => middleware = "urlencoded"
-@module("express") external staticMiddleware: string => middleware = "static"
-@module("express")
+@module("ultimate-express") external staticMiddleware: string => middleware = "static"
+@module("ultimate-express")
 external staticMiddlewareWithOptions: (string, {..}) => middleware = "static"
 
 @send external use: (express, middleware) => unit = "use"
@@ -38,8 +35,8 @@ external staticMiddlewareWithOptions: (string, {..}) => middleware = "static"
 @send external get: (express, string, handler) => unit = "get"
 @send external post: (express, string, handler) => unit = "post"
 @send external delete: (express, string, handler) => unit = "delete"
-@deprecated("Express 5.0 deprecates app.del(), use app.delete() instead")
-@send external del: (express, string, handler) => unit = "del"
+@deprecated("Express 5.0 deprecates app.del(), use app.delete() instead") @send
+external del: (express, string, handler) => unit = "del"
 @send external patch: (express, string, handler) => unit = "patch"
 @send external put: (express, string, handler) => unit = "put"
 @send external all: (express, string, handler) => unit = "all"
@@ -129,7 +126,7 @@ let is: (req, string) => option<string>
 
 module Router: {
   type t
-  @module("express") external make: () => t = "Router"
+  @module("ultimate-express") external make: unit => t = "Router"
   @send external use: (t, middleware) => unit = "use"
   @send external useWithPath: (t, string, middleware) => unit = "use"
 
@@ -139,8 +136,8 @@ module Router: {
   @send external get: (t, string, handler) => unit = "get"
   @send external post: (t, string, handler) => unit = "post"
   @send external delete: (t, string, handler) => unit = "delete"
-  @deprecated("Express 5.0 deprecates app.del(), use app.delete() instead")
-  @send external del: (t, string, handler) => unit = "del"
+  @deprecated("Express 5.0 deprecates app.del(), use app.delete() instead") @send
+  external del: (t, string, handler) => unit = "del"
   @send external patch: (t, string, handler) => unit = "patch"
   @send external put: (t, string, handler) => unit = "put"
   @send external all: (t, string, handler) => unit = "all"
@@ -148,8 +145,8 @@ module Router: {
   type paramHandler = (req, res, unit => unit, string, string) => unit
 
   @send external param: (t, string, paramHandler) => unit = "param"
-  @deprecated("deprecated as of v4.11.0")
-  @send external defineParamBehavior: ((string, 'a) => paramHandler) => unit = "param"
+  @deprecated("deprecated as of v4.11.0") @send
+  external defineParamBehavior: ((string, 'a) => paramHandler) => unit = "param"
 
   @send external route: string => t = "route"
 }

@@ -1,22 +1,21 @@
 {
-  "name": "rescript-express",
+  "name": "rescript-ultimate-express",
   "version": "0.4.1",
   "scripts": {
-    "clean": "bsb -clean-world",
-    "build": "bsb -make-world",
-    "watch": "bsb -make-world -w"
+    "res:build": "rescript",
+    "res:clean": "rescript clean",
+    "res:dev": "rescript -w"
   },
   "keywords": [
-    "ReScript",
-    "express"
+    "rescript",
+    "express",
+    "ultimate-express"
   ],
-  "author": "bloodyowl <bloodyowl@icloud.com>",
+  "author": "v_m_v <michmajchrzak@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "bs-platform": "^9.0.2",
-    "express": "^4.17.1"
-  },
-  "peerDependencies": {
-    "express": "^4.17.1"
+  "dependencies": {
+    "@rescript/core": "^1.6.1",
+    "rescript": "^11.1.4",
+    "ultimate-express": "^1.3.18"
   }
 }
