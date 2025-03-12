@@ -1,6 +1,7 @@
-type express
+type ultimateExpress
 
-@module external ultimateExpress: unit => express = "default"
+@module("ultimate-express")
+external ultimateExpress: unit => ultimateExpress = "default"
 
 type req
 type res
@@ -9,7 +10,7 @@ type middleware = (req, res, unit => unit) => unit
 type middlewareWithError = (Js.Exn.t, req, res, unit => unit) => unit
 type handler = (req, res) => unit
 
-external asMiddleware: express => middleware = "%identity"
+external asMiddleware: ultimateExpress => middleware = "%identity"
 
 // The *Middleware suffixes aren't really nice but avoids forcing people to disable warning 44
 @module("ultimate-express") external jsonMiddleware: unit => middleware = "json"
@@ -26,33 +27,33 @@ external urlencodedMiddlewareWithOptions: {..} => middleware = "urlencoded"
 @module("ultimate-express")
 external staticMiddlewareWithOptions: (string, {..}) => middleware = "static"
 
-@send external use: (express, middleware) => unit = "use"
-@send external useWithPath: (express, string, middleware) => unit = "use"
+@send external use: (ultimateExpress, middleware) => unit = "use"
+@send external useWithPath: (ultimateExpress, string, middleware) => unit = "use"
 
-@send external useWithError: (express, middlewareWithError) => unit = "use"
-@send external useWithPathAndError: (express, string, middlewareWithError) => unit = "use"
+@send external useWithError: (ultimateExpress, middlewareWithError) => unit = "use"
+@send external useWithPathAndError: (ultimateExpress, string, middlewareWithError) => unit = "use"
 
-@send external get: (express, string, handler) => unit = "get"
-@send external post: (express, string, handler) => unit = "post"
-@send external delete: (express, string, handler) => unit = "delete"
+@send external get: (ultimateExpress, string, handler) => unit = "get"
+@send external post: (ultimateExpress, string, handler) => unit = "post"
+@send external delete: (ultimateExpress, string, handler) => unit = "delete"
 @deprecated("Express 5.0 deprecates app.del(), use app.delete() instead")
-@send external del: (express, string, handler) => unit = "del"
-@send external patch: (express, string, handler) => unit = "patch"
-@send external put: (express, string, handler) => unit = "put"
-@send external all: (express, string, handler) => unit = "all"
+@send external del: (ultimateExpress, string, handler) => unit = "del"
+@send external patch: (ultimateExpress, string, handler) => unit = "patch"
+@send external put: (ultimateExpress, string, handler) => unit = "put"
+@send external all: (ultimateExpress, string, handler) => unit = "all"
 
-@send external enable: (express, string) => unit = "enable"
-@send external enabled: (express, string) => bool = "enabled"
-@send external disable: (express, string) => unit = "disable"
+@send external enable: (ultimateExpress, string) => unit = "enable"
+@send external enabled: (ultimateExpress, string) => bool = "enabled"
+@send external disable: (ultimateExpress, string) => unit = "disable"
 
 type server
 
-@send external listen: (express, int) => server = "listen"
+@send external listen: (ultimateExpress, int) => server = "listen"
 @send
-external listenWithCallback: (express, int, option<Js.Exn.t> => unit) => server = "listen"
+external listenWithCallback: (ultimateExpress, int, option<Js.Exn.t> => unit) => server = "listen"
 @send
 external listenWithHostAndCallback: (
-  express,
+  ultimateExpress,
   ~port: int,
   ~host: string,
   option<Js.Exn.t> => unit,
@@ -167,5 +168,5 @@ module Router = {
   @send external route: string => t = "route"
 }
 
-@send external useRouter: (express, Router.t) => unit = "use"
-@send external useRouterWithPath: (express, string, Router.t) => unit = "use"
+@send external useRouter: (ultimateExpress, Router.t) => unit = "use"
+@send external useRouterWithPath: (ultimateExpress, string, Router.t) => unit = "use"
